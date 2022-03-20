@@ -52,6 +52,7 @@ public class GameServiceImpl implements GameService{
         if (game.getLevels() != null) {
             game.getLevels().forEach(
                     l -> {
+                        l.setGame(game);
                         levelService.saveOrUpdate(l);
                     }
             );
@@ -90,7 +91,7 @@ public class GameServiceImpl implements GameService{
         Session session = sessionFactory.openSession();
         session.beginTransaction();
         Game result =  session
-                .createQuery("from Game g where g.id = :id", Game.class)
+                .createQuery("select g from Game g where g.id = :id", Game.class)
                 .setParameter("id", id)
                 .getSingleResult();
         session.getTransaction().commit();

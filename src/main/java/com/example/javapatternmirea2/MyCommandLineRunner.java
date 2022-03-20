@@ -9,6 +9,8 @@ import java.io.*;
 
 @Component
 public class MyCommandLineRunner implements CommandLineRunner {
+    private File file2;
+
     @PostConstruct
     public void init() {
         System.out.println("init");
@@ -17,7 +19,7 @@ public class MyCommandLineRunner implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
         File file1 = new File(args[0]);
-        File file2 = new File(args[1]);
+        file2 = new File(args[1]);
         String content;
         if (file1.exists()) {
             BufferedReader reader = new BufferedReader(new FileReader(file1));
@@ -37,6 +39,7 @@ public class MyCommandLineRunner implements CommandLineRunner {
 
     @PreDestroy
     public void destroy() {
+        file2.delete();
         System.out.println("destroy");
     }
 }
