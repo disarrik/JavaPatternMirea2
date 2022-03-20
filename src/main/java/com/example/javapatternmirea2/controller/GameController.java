@@ -25,6 +25,11 @@ public class GameController {
         return gameService.getAll();
     }
 
+    @GetMapping("/sort")
+    public List<Game> getAllGamesSortedName() {
+        return gameService.getAllSortedByName();
+    }
+
     @PostMapping("/{game_id}/addLevel")
     public void addLevelToGame(@PathVariable("game_id") Long gameId, @RequestBody Level newLevel) {
         Game game = gameService.getById(gameId);

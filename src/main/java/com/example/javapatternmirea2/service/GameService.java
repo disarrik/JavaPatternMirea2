@@ -9,4 +9,5 @@ public interface GameService {
     void delete(Game level);
     List<Game> getAll();
     Game getById(Long id);
+    List<Game> getAllSortedByName();
 }

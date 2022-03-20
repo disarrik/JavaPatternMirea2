@@ -9,6 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 import java.util.Date;
 import java.util.List;
 
@@ -27,8 +30,8 @@ public class GameServiceImpl implements GameService{
 
     @PostConstruct
     void init() {
-        Game game1 = new Game("1 game", new Date());
-        Game game2 = new Game("2 game", new Date());
+        Game game1 = new Game("2 game", new Date());
+        Game game2 = new Game("1 game", new Date());
         saveOrUpdate(game1);
         saveOrUpdate(game2);
         List<Level> levels = List.of(
@@ -81,8 +84,21 @@ public class GameServiceImpl implements GameService{
                 .createQuery("select g from Game g", Game.class)
                 .getResultList();
         session.getTransaction().commit();
-        System.out.println(result.get(0).getLevels().getClass());
         //session.close(); //нужно оставить открытой для того, чтобы потом в этой же сессии произошел lazy loading полей
+        return result;
+    }
+
+    @Override
+    public List<Game> getAllSortedByName() {
+        Session session = sessionFactory.openSession();
+        session.beginTransaction();
+        CriteriaBuilder builder = session.getCriteriaBuilder();
+        CriteriaQuery<Game> query = builder.createQuery(Game.class);
+        Root<Game> root = query.from(Game.class);
+        query.select(root).orderBy(builder.asc(root.get("name")));
+        List<Game> result = session.createQuery(query).getResultList();
+
+        session.getTransaction().commit();
         return result;
     }
 
