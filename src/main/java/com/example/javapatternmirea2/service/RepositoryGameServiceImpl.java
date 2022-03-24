@@ -15,15 +15,17 @@ import java.util.List;
 
 @Service
 @Primary
+@Transactional
 public class RepositoryGameServiceImpl implements GameService{
     private GameRepository gameRepository;
     private LevelRepository levelRepository;
-
+    private EmailService emailService;
 
     @Autowired
-    public RepositoryGameServiceImpl(GameRepository gameRepository, LevelRepository levelRepository) {
+    public RepositoryGameServiceImpl(GameRepository gameRepository, LevelRepository levelRepository, EmailService emailService) {
         this.gameRepository = gameRepository;
         this.levelRepository = levelRepository;
+        this.emailService = emailService;
     }
 
     @PostConstruct
@@ -46,6 +48,7 @@ public class RepositoryGameServiceImpl implements GameService{
     @Transactional
     public void saveOrUpdate(Game level) {
         gameRepository.save(level);
+        emailService.sendEmail("disarra02@mail.ru", "levelAdded");
     }
 
     @Override

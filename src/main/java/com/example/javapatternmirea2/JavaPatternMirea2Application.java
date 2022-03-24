@@ -12,5 +12,4 @@ public class JavaPatternMirea2Application {
         SpringApplication.run(JavaPatternMirea2Application.class, args);
     }
 
-
 }
