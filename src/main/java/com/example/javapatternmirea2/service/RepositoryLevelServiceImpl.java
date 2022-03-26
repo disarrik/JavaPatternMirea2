@@ -13,19 +13,19 @@ import java.util.List;
 @Primary
 @Transactional
 public class RepositoryLevelServiceImpl implements LevelService{
-    private LevelRepository levelRepository;
-    private EmailService emailService;
+    private final LevelRepository levelRepository;
+    //private EmailService emailService;
 
     @Autowired
-    public RepositoryLevelServiceImpl(LevelRepository levelRepository, EmailService emailService) {
+    public RepositoryLevelServiceImpl(LevelRepository levelRepository/*, EmailService emailService*/) {
         this.levelRepository = levelRepository;
-        this.emailService = emailService;
+        /*this.emailService = emailService;*/
     }
 
     @Override
     public void saveOrUpdate(Level level) {
         levelRepository.save(level);
-        emailService.sendEmail("disarra02@mail", "level added");
+        /*emailService.sendEmail("disarra02@mail", "level added");*/
     }
 
     @Override
