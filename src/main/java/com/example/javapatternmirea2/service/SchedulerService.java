@@ -4,7 +4,6 @@ import com.example.javapatternmirea2.entity.Game;
 import com.example.javapatternmirea2.entity.Level;
 import com.example.javapatternmirea2.repository.GameRepository;
 import lombok.extern.slf4j.Slf4j;
-import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jmx.export.annotation.ManagedOperation;
 import org.springframework.jmx.export.annotation.ManagedResource;
